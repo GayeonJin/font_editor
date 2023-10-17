@@ -100,7 +100,7 @@ def edit_font() :
             cursor.move(direction)
             direction = 0
 
-        # Change wall
+        # Change pixel
         if pixel_toggel != 0 :
             font_bitmap.toggle(cursor.x, cursor.y)
             pixel_toggel = 0

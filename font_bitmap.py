@@ -93,7 +93,7 @@ class font_bitmap_object :
 
         font1 = pygame.font.SysFont(None, 20)
         for i, str in enumerate(disp_str) :
-            str += ' 0x%x'%self.code
+            str += ' %c, (0x%x)'%(self.code, self.code)
 
             text_suf1 = font1.render(str, True, COLOR_BLUE)
             text_rect1 = text_suf1.get_rect()
