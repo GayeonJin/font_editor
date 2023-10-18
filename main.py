@@ -110,6 +110,9 @@ def edit_font() :
 
         # Draw font_bitmap
         font_bitmap.draw()
+ 
+        small_font_bitmap.update_bitmap(font_bitmap.get_cur_code(), font_bitmap.get_bitmap())
+        small_font_bitmap.draw(True)
 
         # Draw cursor
         cursor.draw_rect(COLOR_BLACK, 1)
@@ -155,7 +158,7 @@ def start_game_edit() :
        
 def init_game_edit() :
     global clock
-    global font_bitmap, obj_font
+    global font_bitmap, small_font_bitmap, obj_font
 
     # font 
     obj_font = font_object(FONT_WIDTH, FONT_HEIGHT)
@@ -166,6 +169,10 @@ def init_game_edit() :
     # font bitmap
     font_bitmap = font_bitmap_object(MAX_ROWS, MAX_COLS)
     (pad_width, pad_height) = font_bitmap.get_padsize()
+
+    small_font_bitmap = font_bitmap_object(MAX_ROWS, MAX_COLS)
+    rect = pygame.Rect(pad_width - 40, 10, 16, 16)
+    small_font_bitmap.set_rect(rect)
 
     gctrl.set_param(pygame.display.set_mode((pad_width, pad_height)), pad_width, pad_height)
     pygame.display.set_caption("Bitmap Font Editor")
