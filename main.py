@@ -40,11 +40,15 @@ def edit_font() :
     global font_bitmap, obj_font
 
     cursor = cursor_object(font_bitmap)
-
     cursor.x = 0
     cursor.y = 0
+
     direction = 0
     
+    pre_x = 0
+    pre_y = 0
+    mouse_drag = False
+
     change_code = 0
     pixel_toggel = 0
     edit_exit = False
@@ -76,12 +80,45 @@ def edit_font() :
                     obj_font.save_file()
                 elif event.key == pygame.K_x :
                     return
-            elif event.type == pygame.MOUSEBUTTONUP :
+            elif event.type == pygame.MOUSEBUTTONDOWN :
+                l_button, wheel, r_button = pygame.mouse.get_pressed()
                 mouse_pos = pygame.mouse.get_pos()
                 x, y = font_bitmap.get_pos(mouse_pos)
                 if x != None or y != None :
+                    mouse_drag = True
                     cursor.set_pos(x, y)
-                    font_bitmap.toggle(cursor.x, cursor.y)
+                    if l_button :
+                        font_bitmap.set(cursor.x, cursor.y)
+                    elif r_button :
+                        font_bitmap.clear(cursor.x, cursor.y)
+                    pre_x = x
+                    pre_y = y                    
+            elif event.type == pygame.MOUSEMOTION :
+                if mouse_drag == True :
+                    mouse_pos = pygame.mouse.get_pos()
+                    x, y = font_bitmap.get_pos(mouse_pos)
+                    if x != None or y != None :
+                        if pre_x != x or pre_y != y :
+                            cursor.set_pos(x, y)
+                            if l_button :
+                                font_bitmap.set(cursor.x, cursor.y) 
+                            elif r_button :
+                                font_bitmap.clear(cursor.x, cursor.y)                           
+                            pre_x = x
+                            pre_y = y
+            elif event.type == pygame.MOUSEBUTTONUP :
+                mouse_drag = False
+                mouse_pos = pygame.mouse.get_pos()
+                x, y = font_bitmap.get_pos(mouse_pos)
+                if x != None or y != None :
+                    if pre_x != x or pre_y != y :
+                        cursor.set_pos(x, y)
+                        if l_button :
+                            font_bitmap.set(cursor.x, cursor.y)
+                        elif r_button :
+                            font_bitmap.clear(cursor.x, cursor.y)                          
+                        pre_x = x
+                        pre_y = y
 
         # Load the font
         if change_code == MOVE_CODE_NEXT :

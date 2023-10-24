@@ -88,7 +88,13 @@ class font_bitmap_object :
         if self.map[x][y] == 1 :
             self.map[x][y] = 0
         else :
-            self.map[x][y] = 1 
+            self.map[x][y] = 1
+
+    def set(self, x, y) :
+        self.map[x][y] = 1
+
+    def clear(self, x, y) :
+        self.map[x][y] = 0 
 
     def move_next(self, font_length) :
         if self.code < font_length - 1 :
