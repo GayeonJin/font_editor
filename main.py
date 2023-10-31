@@ -8,9 +8,6 @@ import pygame
 import random
 from time import sleep
 
-from tkinter import filedialog
-from tkinter import *
-
 from gresource import *
 from gobject import *
 
@@ -18,8 +15,23 @@ from font import *
 from font_bitmap import *
 from cursor import *
 
+TITLE_STR = "Bitmap Font Editor"
+
 MOVE_CODE_PREV = 1
 MOVE_CODE_NEXT = 2
+
+INFO_HEIGHT = 40
+INFO_OFFSET = 10
+INFO_FONT = 14
+
+def draw_info() :
+    font = pygame.font.SysFont('Verdana', INFO_FONT)
+    info = font.render('F1 : load font,  F2 : save font', True, COLOR_BLACK)
+    info1 = font.render('1 : prev, 2 : next, space : toggle', True, COLOR_BLACK)
+
+    pygame.draw.rect(gctrl.gamepad, COLOR_PURPLE, (0, gctrl.pad_height - INFO_HEIGHT, gctrl.pad_width, INFO_HEIGHT))
+    gctrl.gamepad.blit(info, (INFO_OFFSET * 2, gctrl.pad_height - 2 * INFO_FONT - INFO_OFFSET))
+    gctrl.gamepad.blit(info1, (INFO_OFFSET * 2, gctrl.pad_height - INFO_FONT - INFO_OFFSET))
 
 def draw_message(str) :
     font = pygame.font.Font('freesansbold.ttf', 40)
@@ -72,10 +84,10 @@ def edit_font() :
                     change_code = MOVE_CODE_PREV
                 elif event.key == pygame.K_2 :
                     change_code = MOVE_CODE_NEXT
-                elif event.key == pygame.K_q :               
+                elif event.key == pygame.K_F1 :               
                     obj_font.load_file()
                     font_bitmap.map = obj_font.load_bmp(font_bitmap.code)
-                elif event.key == pygame.K_w :
+                elif event.key == pygame.K_F2 :
                     obj_font.update_bmp(font_bitmap.code, font_bitmap.map) 
                     obj_font.save_file()
                 elif event.key == pygame.K_x :
@@ -154,15 +166,18 @@ def edit_font() :
         # Draw cursor
         cursor.draw_rect(COLOR_BLACK, 1)
 
+        # Draw Info
+        draw_info()
+
         pygame.display.update()
         clock.tick(60)
 
-def start_game_edit() :
+def start_font_edit() :
     # Clear gamepad
     gctrl.gamepad.fill(COLOR_WHITE)
 
     font = pygame.font.Font('freesansbold.ttf', 20)
-    text_suf = font.render("Bitmap Font Editor", True, COLOR_BLACK)
+    text_suf = font.render(TITLE_STR, True, COLOR_BLACK)
     text_rect = text_suf.get_rect()
     text_rect.center = ((gctrl.pad_width / 2), (gctrl.pad_height / 2))
     gctrl.gamepad.blit(text_suf, text_rect)
@@ -193,7 +208,7 @@ def start_game_edit() :
         pygame.display.update()
         clock.tick(60)    
        
-def init_game_edit() :
+def init_font_edit() :
     global clock
     global font_bitmap, small_font_bitmap, obj_font
 
@@ -211,13 +226,15 @@ def init_game_edit() :
     rect = pygame.Rect(pad_width - 40, 10, 16, 16)
     small_font_bitmap.set_rect(rect)
 
+    pad_height += INFO_HEIGHT
+
     gctrl.set_param(pygame.display.set_mode((pad_width, pad_height)), pad_width, pad_height)
-    pygame.display.set_caption("Bitmap Font Editor")
+    pygame.display.set_caption(TITLE_STR)
 
 if __name__ == '__main__' :
-    init_game_edit()
+    init_font_edit()
     while True :
-        mode = start_game_edit()
+        mode = start_font_edit()
         if mode == 'edit' :
             edit_font()
 
