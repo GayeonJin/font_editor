@@ -9,7 +9,6 @@ import random
 from time import sleep
 
 from gresource import *
-from gobject import *
 
 from font import *
 from font_bitmap import *
@@ -29,17 +28,17 @@ def draw_info() :
     info = font.render('F1 : load font,  F2 : save font', True, COLOR_BLACK)
     info1 = font.render('1 : prev, 2 : next, space : toggle', True, COLOR_BLACK)
 
-    pygame.draw.rect(gctrl.gamepad, COLOR_PURPLE, (0, gctrl.pad_height - INFO_HEIGHT, gctrl.pad_width, INFO_HEIGHT))
-    gctrl.gamepad.blit(info, (INFO_OFFSET * 2, gctrl.pad_height - 2 * INFO_FONT - INFO_OFFSET))
-    gctrl.gamepad.blit(info1, (INFO_OFFSET * 2, gctrl.pad_height - INFO_FONT - INFO_OFFSET))
+    pygame.draw.rect(gctrl.surface, COLOR_PURPLE, (0, gctrl.height - INFO_HEIGHT, gctrl.width, INFO_HEIGHT))
+    gctrl.surface.blit(info, (INFO_OFFSET * 2, gctrl.height - 2 * INFO_FONT - INFO_OFFSET))
+    gctrl.surface.blit(info1, (INFO_OFFSET * 2, gctrl.height - INFO_FONT - INFO_OFFSET))
 
 def draw_message(str) :
     font = pygame.font.Font('freesansbold.ttf', 40)
     text_suf = font.render(str, True, COLOR_BLACK)
     text_rect = text_suf.get_rect()
-    text_rect.center = ((gctrl.pad_width / 2), (gctrl.pad_height / 2))
+    text_rect.center = ((gctrl.width / 2), (gctrl.height / 2))
 
-    gctrl.gamepad.blit(text_suf, text_rect)
+    gctrl.surface.blit(text_suf, text_rect)
     pygame.display.update()
     sleep(2)
 
@@ -155,7 +154,7 @@ def edit_font() :
             pixel_toggel = 0
             
         # Clear gamepad
-        gctrl.gamepad.fill(COLOR_WHITE)
+        gctrl.surface.fill(COLOR_WHITE)
 
         # Draw font_bitmap
         font_bitmap.draw()
@@ -174,13 +173,13 @@ def edit_font() :
 
 def start_font_edit() :
     # Clear gamepad
-    gctrl.gamepad.fill(COLOR_WHITE)
+    gctrl.surface.fill(COLOR_WHITE)
 
     font = pygame.font.Font('freesansbold.ttf', 20)
     text_suf = font.render(TITLE_STR, True, COLOR_BLACK)
     text_rect = text_suf.get_rect()
-    text_rect.center = ((gctrl.pad_width / 2), (gctrl.pad_height / 2))
-    gctrl.gamepad.blit(text_suf, text_rect)
+    text_rect.center = ((gctrl.width / 2), (gctrl.height / 2))
+    gctrl.surface.blit(text_suf, text_rect)
 
     help_str = ['e : edit bitmap font',
                 'x : exit']
@@ -190,8 +189,8 @@ def start_font_edit() :
         text_suf1 = font1.render(help, True, COLOR_BLUE)
         text_rect1 = text_suf1.get_rect()
         text_rect1.top = text_rect.bottom + 50 + i * 25
-        text_rect1.centerx = gctrl.pad_width / 2
-        gctrl.gamepad.blit(text_suf1, text_rect1)
+        text_rect1.centerx = gctrl.width / 2
+        gctrl.surface.blit(text_suf1, text_rect1)
 
     while True :
         for event in pygame.event.get():
@@ -228,7 +227,7 @@ def init_font_edit() :
 
     pad_height += INFO_HEIGHT
 
-    gctrl.set_param(pygame.display.set_mode((pad_width, pad_height)), pad_width, pad_height)
+    gctrl.set_surface(pygame.display.set_mode((pad_width, pad_height)))
     pygame.display.set_caption(TITLE_STR)
 
 if __name__ == '__main__' :

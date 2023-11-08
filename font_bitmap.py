@@ -8,7 +8,6 @@ import random
 
 from font import *
 from gresource import *
-from gobject import *
 
 MAX_ROWS = 16
 MAX_COLS = 16
@@ -115,7 +114,7 @@ class font_bitmap_object :
             text_rect1 = text_suf1.get_rect()
             text_rect1.left = x
             text_rect1.top = y
-            gctrl.gamepad.blit(text_suf1, text_rect1)        
+            gctrl.surface.blit(text_suf1, text_rect1)        
 
     def draw(self, real_size = False) :
         # code
@@ -128,9 +127,9 @@ class font_bitmap_object :
         for y in range(self.rows) :
             for x in range(self.cols) :
                 if real_size == False :
-                    pygame.draw.rect(gctrl.gamepad, COLOR_RED, map_rect, 1, 1)
+                    pygame.draw.rect(gctrl.surface, COLOR_RED, map_rect, 1, 1)
                 if self.map[x][y] == 1 :
-                    pygame.draw.rect(gctrl.gamepad, COLOR_BLACK, map_rect)
+                    pygame.draw.rect(gctrl.surface, COLOR_BLACK, map_rect)
 
                 map_rect.x += self.obj_width
             map_rect.y += self.obj_height
