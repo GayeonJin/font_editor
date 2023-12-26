@@ -11,12 +11,15 @@ FONT_HEIGHT = 16
 BYTE_PER_PIXEL = 8
 
 FONT_TYPE_ASCII = 0
-FONT_TYPE_UNICODE = 0
+FONT_TYPE_UNICODE = 1
 
-FONT_NUM_ASCII = 256
-FONT_NUM_UNICODE = 65536
+font_num = {
+    FONT_TYPE_ASCII : 256,
+    FONT_TYPE_UNICODE : 65536
+}
 
 class font_object :
+    
     def __init__(self, font_width = FONT_WIDTH, font_height = FONT_HEIGHT, type = FONT_TYPE_ASCII) :
         self.fonts = []
 
@@ -27,10 +30,7 @@ class font_object :
         self.width_size = int(font_width / BYTE_PER_PIXEL)
         self.font_size = int(self.width_size * font_height) 
 
-        if self.font_type == FONT_TYPE_ASCII :
-            self.font_num = FONT_NUM_ASCII
-        elif self.font_type == FONT_TYPE_UNICODE :
-            self.font_num = FONT_NUM_UNICODE
+        self.font_num = font_num[self.font_type]
 
         for i in range(self.font_num) :
             self.fonts.append([])

@@ -70,13 +70,13 @@ def edit_font() :
 
             if event.type == pygame.KEYUP :
                 if event.key == pygame.K_UP:
-                    direction = CURSOR_MOVE_UP
+                    direction = cursor.CURSOR_MOVE_UP
                 elif event.key == pygame.K_DOWN :
-                    direction = CURSOR_MOVE_DOWN
+                    direction = cursor.CURSOR_MOVE_DOWN
                 elif event.key == pygame.K_LEFT :
-                    direction = CURSOR_MOVE_LEFT
+                    direction = cursor.CURSOR_MOVE_LEFT
                 elif event.key == pygame.K_RIGHT :
-                    direction = CURSOR_MOVE_RIGHT
+                    direction = cursor.CURSOR_MOVE_RIGHT
                 elif event.key == pygame.K_SPACE :
                     pixel_toggel = 1
                 elif event.key == pygame.K_1 :

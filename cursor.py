@@ -9,12 +9,12 @@ import random
 from gresource import *
 from font_bitmap import *
 
-CURSOR_MOVE_LEFT = 1
-CURSOR_MOVE_DOWN = 2
-CURSOR_MOVE_RIGHT = 4
-CURSOR_MOVE_UP = 8
-
 class cursor_object :
+    CURSOR_MOVE_LEFT = 1
+    CURSOR_MOVE_DOWN = 2
+    CURSOR_MOVE_RIGHT = 4
+    CURSOR_MOVE_UP = 8
+
     def __init__(self, map) :
         self.x = 0
         self.y = 0
@@ -30,19 +30,19 @@ class cursor_object :
         self.y = y
 
     def move(self, direction) :
-        if direction == CURSOR_MOVE_UP :
+        if direction == self.CURSOR_MOVE_UP :
             self.y -= 1
             if self.y < 0 :
                 self.y = 0        
-        elif direction == CURSOR_MOVE_DOWN:
+        elif direction == self.CURSOR_MOVE_DOWN:
             self.y += 1
             if self.y >= self.rows :
                 self.y = self.rows - 1
-        elif direction == CURSOR_MOVE_LEFT :
+        elif direction == self.CURSOR_MOVE_LEFT :
             self.x -= 1
             if self.x < 0 :
                 self.x = 0
-        elif direction == CURSOR_MOVE_RIGHT :
+        elif direction == self.CURSOR_MOVE_RIGHT :
             self.x += 1
             if self.x >= self.cols  :
                 self.x = self.cols  - 1         
